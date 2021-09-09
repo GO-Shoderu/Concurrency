@@ -7,6 +7,7 @@ public class Counter {
 		return getCounter();
 	}
 
+	//this is the getCounter
 	private int getCounter() {
 		return counter;
 	}
