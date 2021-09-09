@@ -1,13 +1,24 @@
+//importing the locks needed
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Counter {
 	private int counter = 0;
-	
+	private Lock lock = new ReentrantLock();
+
 	public int getAndIncrement() {
-		setCounter(getCounter() + 1);
-		return getCounter();
+
+		lock.lock();
+
+		try {
+			setCounter(getCounter() + 1);
+			return getCounter();
+		}finally {
+			lock.unlock();
+		}
+
 	}
 
-	//this is the getCounter
 	private int getCounter() {
 		return counter;
 	}
