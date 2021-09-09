@@ -1,10 +1,6 @@
-//importing the locks needed
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-public class Counter {
+public class Counter extends PetersonLock{
 	private int counter = 0;
-	private Lock lock = new ReentrantLock();
+	PetersonLock lock = new PetersonLock();
 
 	public int getAndIncrement() {
 

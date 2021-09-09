@@ -16,6 +16,6 @@ public class Main {
 			e.printStackTrace();
 		}
 
-		System.out.println("Both threads are done running.... Practical_1_Task_2...");
+		System.out.println("Both threads are done running.... Practical_1_Task_3...");
 	}
 }
