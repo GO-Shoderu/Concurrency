@@ -6,7 +6,7 @@ import java.util.concurrent.locks.Lock;
 public class Store
 {
 	//Filter n = new Filter(2);
-	Lock lock = new Filter(4);
+	Lock lock = new Bakery(4);
 	
 	//creating the time related variables
 	int min = 200;
