@@ -1,21 +1,19 @@
+// Name: Gabriel Shoderu
+// Student Number: u16186258
+
 public class Main {
 
-    public static void main(String[] args){
-    	Counter c = new Counter();
-    	Thread t1 = new Runner(c);
-    	Thread t2 = new Runner(c);
-    	
-    	t1.start();
-    	t2.start();
-    	
-    	try {
-			t1.join();
-	    	t2.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	System.out.println("Both threads are done running.... Practical_1_Task_1...");
+    public static void main(String[] args) {
+	    Queue[] queues = new Queue[4];
+
+        Store store = new Store();
+
+        for(int i = 0; i < 4; i++)
+            queues[i] = new Queue(store);
+
+        for(Queue queue : queues)
+            queue.start();
+
+        System.out.println("Threads running from Practical_2_Task_1...");
     }
 }
