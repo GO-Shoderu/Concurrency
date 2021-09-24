@@ -1,21 +1,20 @@
+//Name: Gabriel Shoderu
+//Student Number: u16186258
+
 public class Main {
 
-    public static void main(String[] args){
-    	Counter c = new Counter();
-    	Thread t1 = new Runner(c);
-    	Thread t2 = new Runner(c);
-    	
-    	t1.start();
-    	t2.start();
-    	
-    	try {
-			t1.join();
-	    	t2.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	System.out.println("Both threads are done running.... Practical_1_Task_1...");
-    }
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Company[] companies = new Company[6];
+		
+		CarWash carwash = new CarWash();
+		
+		for(int i = 0; i < 6; i++)
+			companies[i] = new Company(carwash);
+
+        for(Company company : companies)
+        	company.start();
+        
+	}
+
 }
