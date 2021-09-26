@@ -23,12 +23,15 @@ public class Company extends Thread{
 		
 		while(!carwash.getDryQueue().isEmpty() || !carwash.getWashQueue().isEmpty()) {
 			
+			//making my washers even and my driers odd
 			if(id % 2 == 0) {
 				
 				//generating the randomness
 				int workTime = (int) (Math.random() * (workMax - workMin + 1) + workMin);
 				
 				if(!carwash.getWashQueue().isEmpty()) {
+					
+					System.out.println(String.format("Thread-%d is ready to wash a car", id));
 					carwash.WashCar(id, workTime);
 					
 					int breakTime = (int)(Math.random() * (breakMax - breakMin + 1) + breakMin);
@@ -50,6 +53,8 @@ public class Company extends Thread{
 				int workTime = (int) (Math.random() * (workMax - workMin + 1) + workMin);
 				
 				if(!carwash.getDryQueue().isEmpty()) {
+					
+					System.out.println(String.format("Thread-%d is ready to dry a car", id));
 					carwash.dryCar(id, workTime);
 					
 					int breakTime = (int)(Math.random() * (breakMax - breakMin + 1) + breakMin);

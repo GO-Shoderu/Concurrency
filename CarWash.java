@@ -9,7 +9,8 @@ public class CarWash
 {
 	private volatile Queue<Car> washCars = new LinkedList<>(), dryCars = new LinkedList<>();
 	
-	Lock lock = new Bakery(6);
+	Lock lock1 = new Bakery(6);
+	Lock lock2 = new Bakery(6);
 
 	public CarWash(){
 		washCars.add(new Car('s', "Panda"));
@@ -23,28 +24,25 @@ public class CarWash
 	
 	public void WashCar(int id, int workTime) {
 		
-		lock.lock();
+		lock1.lock();
 		
 		try {
 			if(!washCars.isEmpty()) {
 				
-				System.out.println(String.format("Thread-%d is ready to wash a car", id));
-				
-				Car carToBeWashed = washCars.remove();
+//				System.out.println(String.format("Thread-%d is ready to wash a car", id));
 				
 				Thread.sleep((long) workTime);
 				
-				carToBeWashed.washTime = (long) (carToBeWashed.washTime - workTime);
+				washCars.peek().washTime = washCars.peek().washTime - workTime;
 					
-				if(carToBeWashed.washTime <= 0) {
+				if(washCars.peek().washTime <= 0) {
 					
-					System.out.println(String.format("Thread-%d finished washing %s", ThreadID.get(), carToBeWashed.name));
-					dryCars.add(carToBeWashed);
+					System.out.println(String.format("Thread-%d finished washing %s", ThreadID.get(), washCars.peek().name));
+					dryCars.add(washCars.remove());
 					
 				}else {
 
-					System.out.println(String.format("Thread-%d washed %s for %d ms. Time remaining: %d", ThreadID.get(), carToBeWashed.name, (int) workTime, carToBeWashed.washTime));
-					washCars.add(carToBeWashed);
+					System.out.println(String.format("Thread-%d washed %s for %d ms. Time remaining: %d", ThreadID.get(), washCars.peek().name, (int) workTime, washCars.peek().washTime));
 
 				}
 					
@@ -55,34 +53,32 @@ public class CarWash
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			lock.unlock();
+			lock1.unlock();
 		}
 
 	}
 	
 	public void dryCar(int id, int workTime) {
 		
-		lock.lock();
+		lock2.lock();
 		
 		try {
 			if(!dryCars.isEmpty()) {
 				
-				System.out.println(String.format("Thread-%d is ready to dry a car", id));
-				
-				Car carToBeDried = dryCars.remove();
+//				System.out.println(String.format("Thread-%d is ready to dry a car", id));
 				
 				Thread.sleep((long) workTime);
 				
-				carToBeDried.dryTime = (long) (carToBeDried.dryTime - workTime);
+				dryCars.peek().dryTime = dryCars.peek().dryTime - workTime;
 					
-				if(carToBeDried.dryTime <= 0) {
+				if(dryCars.peek().dryTime <= 0) {
 					
-					System.out.println(String.format("Thread-%d finished drying %s", ThreadID.get(), carToBeDried.name));
+					System.out.println(String.format("Thread-%d finished drying %s", ThreadID.get(), dryCars.peek().name));
+					dryCars.remove();
 					
 				}else {
 
-					System.out.println(String.format("Thread-%d dried %s for %d ms. Time remaining: %d", ThreadID.get(), carToBeDried.name, (int) workTime, carToBeDried.dryTime));
-					dryCars.add(carToBeDried);
+					System.out.println(String.format("Thread-%d dried %s for %d ms. Time remaining: %d", ThreadID.get(), dryCars.peek().name, (int) workTime, dryCars.peek().dryTime));
 
 				}
 
@@ -93,7 +89,7 @@ public class CarWash
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			lock.unlock();
+			lock2.unlock();
 		}
 		
 	}
