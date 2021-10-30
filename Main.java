@@ -1,21 +1,32 @@
 public class Main {
+    @SuppressWarnings("unchecked")
+	public static void main(String[] args) {
+    	
+    	System.out.println("Compare-And-Swap Consensus - Task_2");
+    	System.out.println("The winning Register value is -1");
+    	System.out.println();
 
-    public static void main(String[] args){
-    	Counter c = new Counter();
-    	Thread t1 = new Runner(c);
-    	Thread t2 = new Runner(c);
-    	
-    	t1.start();
-    	t2.start();
-    	
-    	try {
-			t1.join();
-	    	t2.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	System.out.println("Both threads are done running.... Practical_1_Task_1...");
+        int numThreads = 5; 
+
+        CASConsensus consensusImpl = new CASConsensus(numThreads) ;
+        ConsensusThread[] friends = new ConsensusThread[numThreads] ;
+        
+        for (int i = 0 ; i < numThreads ; i++){
+            friends[i] = new ConsensusThread(consensusImpl) ;
+        }
+        
+        for (int i = 0 ; i < numThreads ; i++){
+            friends[i].start();
+        }
+
+        for (int i = 0 ; i < numThreads ; i++){
+            try {
+                friends[i].join();
+            } catch (Exception e) {
+                //TODO: handle exception
+            }
+
+        }
+        
     }
 }
